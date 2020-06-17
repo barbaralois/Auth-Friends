@@ -13,38 +13,38 @@ let friends = [
     id: 1,
     name: 'Rachel Green',
     age: 30,
-    email: 'rachel@friends.com'
+    email: 'rachel@friends.com',
   },
   {
     id: 2,
     name: 'Joey Tribbiani',
     age: 34,
-    email: 'joey@friends.com'
+    email: 'joey@friends.com',
   },
   {
     id: 3,
     name: 'Chandler Bing',
     age: 32,
-    email: 'chandler@friends.com'
+    email: 'chandler@friends.com',
   },
   {
     id: 4,
     name: 'Ross Geller',
     age: 32,
-    email: 'ross@friends.com'
+    email: 'ross@friends.com',
   },
   {
     id: 5,
     name: 'Monica Bing',
     age: 31,
-    email: 'monica@friends.com'
+    email: 'monica@friends.com',
   },
   {
     id: 6,
     name: 'Phoebe Buffay-Hannigan',
     age: 30,
-    email: 'phoebe@friends.com'
-  }
+    email: 'phoebe@friends.com',
+  },
 ];
 
 app.use(bodyParser.json());
@@ -62,10 +62,10 @@ function authenticator(req, res, next) {
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === 'Lambda School' && password === 'i<3Lambd4') {
+  if (username === 'lambda' && password === 'school') {
     req.loggedIn = true;
     res.status(200).json({
-      payload: token
+      payload: token,
     });
   } else {
     res
@@ -81,7 +81,7 @@ app.get('/api/friends', authenticator, (req, res) => {
 });
 
 app.get('/api/friends/:id', authenticator, (req, res) => {
-  const friend = friends.find(f => f.id == req.params.id);
+  const friend = friends.find((f) => f.id == req.params.id);
 
   if (friend) {
     res.status(200).json(friend);
@@ -101,7 +101,7 @@ app.post('/api/friends', authenticator, (req, res) => {
 app.put('/api/friends/:id', authenticator, (req, res) => {
   const { id } = req.params;
 
-  const friendIndex = friends.findIndex(f => f.id == id);
+  const friendIndex = friends.findIndex((f) => f.id == id);
 
   if (friendIndex > -1) {
     const friend = { ...friends[friendIndex], ...req.body };
@@ -109,7 +109,7 @@ app.put('/api/friends/:id', authenticator, (req, res) => {
     friends = [
       ...friends.slice(0, friendIndex),
       friend,
-      ...friends.slice(friendIndex + 1)
+      ...friends.slice(friendIndex + 1),
     ];
     res.send(friends);
   } else {
@@ -120,7 +120,7 @@ app.put('/api/friends/:id', authenticator, (req, res) => {
 app.delete('/api/friends/:id', authenticator, (req, res) => {
   const { id } = req.params;
 
-  friends = friends.filter(f => f.id !== Number(id));
+  friends = friends.filter((f) => f.id !== Number(id));
 
   res.send(friends);
 });
